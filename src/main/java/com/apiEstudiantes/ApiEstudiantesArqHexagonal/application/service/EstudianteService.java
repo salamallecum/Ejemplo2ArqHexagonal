@@ -7,6 +7,7 @@ package com.apiEstudiantes.ApiEstudiantesArqHexagonal.application.service;
 
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.application.ports.input.EstudianteServicePort;
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.application.ports.output.EstudiantePersistencePort;
+import com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.exception.EstudianteAlreadyExistsException;
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.exception.EstudianteNotFoundException;
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.model.Estudiante;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class EstudianteService implements EstudianteServicePort {
     @Override
     public Estudiante findById(Long id) {
         return persistencePort.findById(id)
-                .orElseThrow(EstudianteNotFoundException::new);
+                .orElseThrow(() -> new EstudianteNotFoundException("Estudiante no encontrado con id: " + id));
     }
 
     @Override
@@ -35,7 +36,13 @@ public class EstudianteService implements EstudianteServicePort {
 
     @Override
     public Estudiante save(Estudiante nvoEstudiante) {
-        return persistencePort.save(nvoEstudiante);
+
+        //Validamos si existe un estudiante con el mismo username y en caso de que exista lanzamos la excepción
+        if(persistencePort.existsByUsername(nvoEstudiante.getUsername())){
+            throw new EstudianteAlreadyExistsException("Ya existe un estudiante con ese username");
+        }else{
+            return persistencePort.save(nvoEstudiante);
+        }
     }
 
     @Override
@@ -53,7 +60,7 @@ public class EstudianteService implements EstudianteServicePort {
                             estudianteSaved.setDireccion(estudianteEdit.getDireccion());
                             return persistencePort.save(estudianteSaved);
                         })
-                        .orElseThrow(EstudianteNotFoundException::new);
+                        .orElseThrow(() -> new EstudianteNotFoundException("Estudiante no encontrado con id: " + id));
 
     }
 
@@ -62,7 +69,7 @@ public class EstudianteService implements EstudianteServicePort {
         //Localizamos mediante el id el estudiante y en caso de que exista lo eliminamos de la BD
         // si no lo encuentra retornará la excepción que definimos
         if(persistencePort.findById(id).isEmpty()){
-            throw new EstudianteNotFoundException();
+            throw new EstudianteNotFoundException("Estudiante no encontrado con id: " + id);
         }
         persistencePort.deleteById(id);
     }

@@ -11,6 +11,7 @@ public enum ErrorCatalog {
     //Códigos de error definidos para la aplicación, con su respectivo mensaje de error
     ESTUDIANTE_NOT_FOUND("ERR-EST-001", "Estudiante no encontrado."),
     ESTUDIANTE_INVALID("ERR-EST-002", "Datos del estudiante inválidos."),
+    ESTUDIANTE_ALREADY_EXISTS("ERR-EST-003", "Estudiante ya existe."),
     GENERIC_ERROR("ERR-SRV-001", "Error interno del servidor.");
 
     private final String code;

@@ -45,4 +45,9 @@ public class EstudiantePersistenceAdapter implements EstudiantePersistencePort {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return repository.existsByUsername(username);
+    }
 }

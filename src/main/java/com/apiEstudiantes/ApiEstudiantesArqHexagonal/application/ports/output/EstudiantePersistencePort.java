@@ -27,4 +27,8 @@ public interface EstudiantePersistencePort {
 
     //Elimina un estudiante
     void deleteById(Long id);
+
+    //Validamos si existe un estudiante por su username
+    boolean existsByUsername(String username);
+
 }

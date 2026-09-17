@@ -1,5 +1,6 @@
 package com.apiEstudiantes.ApiEstudiantesArqHexagonal.infraestructure.adapters;
 
+import com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.exception.EstudianteAlreadyExistsException;
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.exception.EstudianteNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -44,6 +45,19 @@ public class GlobalControllerAdvice {
                         .stream()
                         .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                         .collect(Collectors.toList()))
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    //Método encargado de definir la excepción que se lanza cuando se encuentra un estudiante con el mismo
+    // nombre de usuario en la base de datos
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(EstudianteAlreadyExistsException.class)
+    public ErrorResponse handleEstudianteAlreadyExistsException(EstudianteAlreadyExistsException ex) {
+        return ErrorResponse.builder()
+                .codigoError(ESTUDIANTE_ALREADY_EXISTS.getCode())
+                .mensaje(ESTUDIANTE_ALREADY_EXISTS.getMessage())
+                .detalles(Collections.singletonList(ex.getMessage()))
                 .timestamp(LocalDateTime.now())
                 .build();
     }

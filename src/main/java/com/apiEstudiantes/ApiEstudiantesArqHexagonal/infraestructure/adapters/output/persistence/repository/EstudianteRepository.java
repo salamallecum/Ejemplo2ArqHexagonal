@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 //Clase repository que hereda los metodos crud de jpa para la implementación de los metodos crud en bd
 @Repository
 public interface EstudianteRepository extends JpaRepository <EstudianteEntity, Long>{
+
+    //Validamos si existe un estudiante por su username
+    boolean existsByUsername(String username);
 }
