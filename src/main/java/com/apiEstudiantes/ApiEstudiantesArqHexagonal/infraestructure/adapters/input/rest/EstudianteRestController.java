@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //Clase controladora que define los endpoints de la API REST para el manejo de estudiantes
 @RestController
@@ -53,8 +55,11 @@ public class EstudianteRestController {
 
     //EndPoint para eliminar un estudiante por su id
     @DeleteMapping("/{id}")
-    public void deleteEstudiante(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEstudiante(@PathVariable Long id) {
         estudianteServicePort.deleteById(id);
+        Map<String, Object> data = new HashMap<>();
+        data.put("Mensaje", "Estudiante eliminado con éxito");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(data);
     }
 
 }
