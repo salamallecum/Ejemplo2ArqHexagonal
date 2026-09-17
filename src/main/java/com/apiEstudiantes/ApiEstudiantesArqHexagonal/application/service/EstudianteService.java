@@ -51,7 +51,7 @@ public class EstudianteService implements EstudianteServicePort {
                             estudianteSaved.setTelefono(estudianteEdit.getTelefono());
                             estudianteSaved.setEdad(estudianteEdit.getEdad());
                             estudianteSaved.setDireccion(estudianteEdit.getDireccion());
-                            return persistencePort.save(estudianteEdit);
+                            return persistencePort.save(estudianteSaved);
                         })
                         .orElseThrow(EstudianteNotFoundException::new);
 

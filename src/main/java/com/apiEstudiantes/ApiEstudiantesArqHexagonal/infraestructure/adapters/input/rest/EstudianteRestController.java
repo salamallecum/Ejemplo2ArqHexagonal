@@ -37,7 +37,7 @@ public class EstudianteRestController {
     }
 
     //EndPoint para registrar un nuevo estudiante
-    @PostMapping
+    @PostMapping("/crearEstudiante")
     public ResponseEntity<EstudianteResponse> saveEstudiante(@Valid @RequestBody SaveEstudianteRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(estudianteRestMapper.toEstudianteResponse(estudianteServicePort.save(
@@ -45,7 +45,7 @@ public class EstudianteRestController {
     }
 
     //Endpoint para actualizar un estudiante existente
-    @PutMapping("/{id}")
+    @PutMapping("/actualizarEstudiante/{id}")
     public EstudianteResponse updateEstudiante(@PathVariable Long id, @Valid @RequestBody SaveEstudianteRequest request) {
         return estudianteRestMapper.toEstudianteResponse(
                 estudianteServicePort.update(id, estudianteRestMapper.toEstudiante(request)));

@@ -1,14 +1,12 @@
 package com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 //Clase que define la estructura de la respuesta de error que se enviará al cliente en caso de que ocurra un error en la API REST
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor

@@ -5,12 +5,14 @@ import com.apiEstudiantes.ApiEstudiantesArqHexagonal.domain.model.Estudiante;
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.infraestructure.adapters.output.persistence.mapper.EstudiantePersistenceMapper;
 import com.apiEstudiantes.ApiEstudiantesArqHexagonal.infraestructure.adapters.output.persistence.repository.EstudianteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 //Clase adaptador encargada del manejo de la persistencia (Implementa y sobreescribe los métodos de la interfaz
 // EstudiantePersistencePort definida en la capa application)
+@Component
 @RequiredArgsConstructor
 public class EstudiantePersistenceAdapter implements EstudiantePersistencePort {
 
