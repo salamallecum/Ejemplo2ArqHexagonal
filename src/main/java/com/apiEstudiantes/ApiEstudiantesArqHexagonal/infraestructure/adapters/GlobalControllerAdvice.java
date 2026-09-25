@@ -21,12 +21,13 @@ import static com.apiEstudiantes.ApiEstudiantesArqHexagonal.infraestructure.adap
 public class GlobalControllerAdvice {
 
     //Método encargado de definir la excepción que se lanza cuando no se encuentra un estudiante en la base de datos
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(EstudianteNotFoundException.class)
-    public ErrorResponse handEstudianteNotFoundException() {
+    public ErrorResponse handEstudianteNotFoundException(EstudianteNotFoundException ex) {
         return ErrorResponse.builder()
                 .codigoError(ESTUDIANTE_NOT_FOUND.getCode())
                 .mensaje(ESTUDIANTE_NOT_FOUND.getMessage())
+                .detalles(Collections.singletonList(ex.getMessage()))
                 .timestamp(LocalDateTime.now())
                 .build();
     }
